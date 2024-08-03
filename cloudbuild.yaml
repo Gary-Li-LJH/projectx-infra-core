@@ -1,5 +1,23 @@
 steps:
-  - name: 'gcr.io/cloud-builders/gcloud'
-    args: ['echo', 'Hello, World!']
+  - name: 'hashicorp/terraform:1.0.0'
+    entrypoint: 'sh'
+    args:
+    - '-c'
+    - |
+      if [ "$BRANCH_NAME" = "dev" ]; then
+        terraform init
+        terraform plan -out=tfplan
+      elif [ "$BRANCH_NAME" = "main" ]; then
+        terraform init
+        terraform plan -out=tfplan
+        terraform apply -auto-approve tfplan
+      else
+        echo "Not a dev or main branch. Skipping Terraform operations."
+      fi
+artifacts:
+  objects:
+    location: 'gs://${PROJECT_ID}-terraform-state/cloudbuild-artifacts/'
+    paths: ['tfplan']
+timeout: '1800s'
 options:
   logging: CLOUD_LOGGING_ONLY
