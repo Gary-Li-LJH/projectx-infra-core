@@ -53,28 +53,30 @@ create_or_update_trigger() {
     local name=$1
     local branch=$2
 
-    if gcloud builds triggers describe "$name" --project=$PROJECT_ID > /dev/null 2>&1; then
-        echo "Trigger $name already exists. Updating..."
-        gcloud builds triggers update github \
-            --project=$PROJECT_ID \
-            --name="$name" \
-            --repo-name=projectx-infra-core \
-            --repo-owner=Gary-Li-LJH \
-            --branch-pattern="^$branch$" \
-            --build-config=cloudbuild.yaml \
-            --description="Trigger for $branch branch" \
-            --verbosity=debug
+    # Check if trigger exists
+    if gcloud builds triggers describe "$name" --project=$PROJECT_ID --region=$REGION &>/dev/null; then
+        echo "Trigger $name already exists. Deleting..."
+        
+        # Delete existing trigger
+        gcloud builds triggers delete "$name" --project=$PROJECT_ID --region=$REGION --quiet
+    fi
+
+    echo "Creating trigger $name"
+    
+    # Create trigger with minimal arguments
+    gcloud builds triggers create github \
+        --project=$PROJECT_ID \
+        --region=$REGION \
+        --name="$name" \
+        --repo-name=projectx-infra-core \
+        --repo-owner=Gary-Li-LJH \
+        --branch-pattern="^$branch$" \
+        --build-config=cloudbuild.yaml
+    
+    if [ $? -eq 0 ]; then
+        echo "Trigger $name created successfully."
     else
-        echo "Creating trigger $name"
-        gcloud builds triggers create github \
-            --project=$PROJECT_ID \
-            --name="$name" \
-            --repo-name=projectx-infra-core \
-            --repo-owner=Gary-Li-LJH \
-            --branch-pattern="^$branch$" \
-            --build-config=cloudbuild.yaml \
-            --description="Trigger for $branch branch" \
-            --verbosity=debug
+        echo "Failed to create trigger $name. Please check your permissions and repository settings."
     fi
 }
 
