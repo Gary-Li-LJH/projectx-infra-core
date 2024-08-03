@@ -1,0 +1,28 @@
+DEBUG: Running [gcloud.builds.triggers.create.github] with arguments: [--branch-pattern: "^dev$", --build-config: "cloudbuild.yaml", --name: "test-trigger", --project: "my-ndf-terraform-proj", --repo-name: "projectx-infra-core", --repo-owner: "Gary-Li-LJH", --verbosity: "debug"]
+DEBUG: Starting new HTTPS connection (1): cloudbuild.googleapis.com:443
+DEBUG: https://cloudbuild.googleapis.com:443 "POST /v1/projects/my-ndf-terraform-proj/locations/global/triggers?alt=json HTTP/1.1" 400 None
+DEBUG: (gcloud.builds.triggers.create.github) INVALID_ARGUMENT: Request contains an invalid argument.
+Traceback (most recent call last):
+  File "C:\Users\gary\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\googlecloudsdk\calliope\cli.py", line 998, in Execute
+    resources = calliope_command.Run(cli=self, args=args)
+  File "C:\Users\gary\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\googlecloudsdk\calliope\backend.py", line 822, in Run
+    resources = command_instance.Run(args)
+  File "C:\Users\gary\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\surface\builds\triggers\create\github.py", line 189, in Run
+    created_trigger = client.projects_locations_triggers.Create(
+  File "C:\Users\gary\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\googlecloudsdk\generated_clients\apis\cloudbuild\v1\cloudbuild_v1_client.py", line 2129, in Create
+    return self._RunMethod(
+  File "C:\Users\gary\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\third_party\apitools\base\py\base_api.py", line 737, in _RunMethod
+    return self.ProcessHttpResponse(method_config, http_response, request)
+  File "C:\Users\gary\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\third_party\apitools\base\py\base_api.py", line 743, in ProcessHttpResponse
+    self.__ProcessHttpResponse(method_config, http_response, request))
+  File "C:\Users\gary\AppData\Local\Google\Cloud SDK\google-cloud-sdk\lib\third_party\apitools\base\py\base_api.py", line 609, in __ProcessHttpResponse
+    raise exceptions.HttpError.FromResponse(
+apitools.base.py.exceptions.HttpBadRequestError: HttpError accessing <https://cloudbuild.googleapis.com/v1/projects/my-ndf-terraform-proj/locations/global/triggers?alt=json>: response: <{'vary': 'Origin, X-Origin, Referer', 'content-type': 'application/json; charset=UTF-8', 'content-encoding': 'gzip', 'date': 'Sat, 03 Aug 2024 15:07:37 GMT', 'server': 'ESF', 'cache-control': 'private', 'x-xss-protection': '0', 'x-frame-options': 'SAMEORIGIN', 'x-content-type-options': 'nosniff', 'alt-svc': 'h3=":443"; ma=2592000,h3-29=":443"; ma=2592000', 'transfer-encoding': 'chunked', 'status': 400}>, content <{
+  "error": {
+    "code": 400,
+    "message": "Request contains an invalid argument.",
+    "status": "INVALID_ARGUMENT"
+  }
+}
+>
+ERROR: (gcloud.builds.triggers.create.github) INVALID_ARGUMENT: Request contains an invalid argument.
