@@ -3,6 +3,7 @@
 # Exit immediately if a command exits with a non-zero status.
 set -e
 
+#test commemt
 # Set your project ID and region
 PROJECT_ID="my-ndf-terraform-proj"
 REGION="australia-southeast1"
