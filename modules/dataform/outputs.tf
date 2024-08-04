@@ -1,3 +1,4 @@
 output "repository_name" {
-  value = google_dataform_repository.retail_dataform.name
+  description = "The name of the Dataform repository."
+  value       = google_dataform_repository.repository.name
 }
