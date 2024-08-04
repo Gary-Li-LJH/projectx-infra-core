@@ -1,11 +1,8 @@
-# storage.tf
-
 module "retail_data_bucket" {
-  source = "./module/storage"
+  source = "./modules/storage"
 
   project_id  = var.project_id
   region      = var.region
-  project_number = var.project_number
   bucket_name = "retail-data"
 
   lifecycle_rules = [
@@ -15,16 +12,14 @@ module "retail_data_bucket" {
     }
   ]
 
-  enable_versioning   = true
-  enable_notifications = true
+  enable_versioning = true
 }
 
 module "processed_data_bucket" {
-  source = "./module/storage"
+  source = "./modules/storage"
 
   project_id  = var.project_id
   region      = var.region
-  project_number = var.project_number
   bucket_name = "processed-retail-data"
 
   lifecycle_rules = [
@@ -34,6 +29,5 @@ module "processed_data_bucket" {
     }
   ]
 
-  enable_versioning   = true
-  enable_notifications = false
+  enable_versioning = true
 }
