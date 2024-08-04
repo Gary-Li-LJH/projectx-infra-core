@@ -17,12 +17,20 @@ provider "google" {
   region  = var.region
 }
 
+resource "google_project_iam_member" "cloudbuild_network_admin" {
+  project = var.project_id
+  role    = "roles/compute.networkAdmin"
+  member  = "serviceAccount:${var.cloudbuild_sa_email}"
+}
+
 module "storage" {
   source     = "./modules/storage"
   project_id = var.project_id
   region     = var.region
   bucket_name = "${var.project_id}-retail-data"
 }
+
+
 
 # module "composer" {
 #   source     = "./modules/composer"
@@ -65,8 +73,8 @@ module "storage" {
 #   member  = "serviceAccount:${module.composer.service_account_email}"
 # }
 
-# resource "google_project_iam_member" "storage_object_viewer" {
-#   project = var.project_id
-#   role    = "roles/storage.objectViewer"
-#   member  = "serviceAccount:${module.composer.service_account_email}"
-# }
+resource "google_project_iam_member" "storage_object_viewer" {
+  project = var.project_id
+  role    = "roles/storage.objectViewer"
+  member  = "serviceAccount:${module.composer.service_account_email}"
+}
