@@ -1,17 +1,23 @@
-resource "google_storage_bucket" "data_bucket" {
-  name     = var.bucket_name
+resource "google_storage_bucket" "bucket" {
+  name     = "${var.project_id}-${var.bucket_name}"
   location = var.region
-  force_destroy = true
-}
 
-resource "google_compute_network" "composer_network" {
-  name                    = "composer-network"
-  auto_create_subnetworks = false
-}
+  uniform_bucket_level_access = true
+  force_destroy               = true
 
-resource "google_compute_subnetwork" "composer_subnetwork" {
-  name          = "composer-subnetwork"
-  ip_cidr_range = "10.2.0.0/16"
-  region        = var.region
-  network       = google_compute_network.composer_network.id
+  dynamic "lifecycle_rule" {
+    for_each = var.lifecycle_rules
+    content {
+      condition {
+        age = lifecycle_rule.value.age
+      }
+      action {
+        type = lifecycle_rule.value.action
+      }
+    }
+  }
+
+  versioning {
+    enabled = var.enable_versioning
+  }
 }

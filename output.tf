@@ -1,15 +1,19 @@
-# output "gcs_bucket_name" {
-#   value = module.storage.bucket_name
-# }
+output "retail_data_bucket_name" {
+  value       = module.retail_data_bucket.bucket_name
+  description = "The name of the GCS bucket for retail data"
+}
 
-# output "composer_airflow_uri" {
-#   value = module.composer.airflow_uri
-# }
+output "retail_data_bucket_url" {
+  value       = module.retail_data_bucket.bucket_url
+  description = "The URL of the GCS bucket for retail data"
+}
 
-# output "bigquery_dataset_id" {
-#   value = module.bigquery.dataset_id
-# }
+output "processed_data_bucket_name" {
+  value       = module.processed_data_bucket.bucket_name
+  description = "The name of the GCS bucket for processed data"
+}
 
-# output "dataform_repository_name" {
-#   value = module.dataform.repository_name
-# }
+output "processed_data_bucket_url" {
+  value       = module.processed_data_bucket.bucket_url
+  description = "The URL of the GCS bucket for processed data"
+}
