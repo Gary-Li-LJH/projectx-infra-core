@@ -63,8 +63,16 @@ fi
 # Grant necessary roles to the service account
 roles=(
     "roles/cloudbuild.builds.builder"
-    "roles/storage.objectViewer"
     "roles/storage.admin"
+    "roles/compute.admin"
+    "roles/iam.serviceAccountUser"
+    "roles/iam.serviceAccountAdmin"
+    "roles/resourcemanager.projectIamAdmin"
+    "roles/bigquery.admin"
+    "roles/dataflow.admin"
+    "roles/composer.admin"
+    "roles/dataform.admin"
+    "roles/serviceusage.serviceUsageAdmin"
     # Add any other necessary roles here
 )
 
