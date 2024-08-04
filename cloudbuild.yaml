@@ -44,3 +44,10 @@ steps:
       else
         echo "Not a dev or main branch. Skipping Terraform operations."
       fi
+artifacts:
+  objects:
+    location: 'gs://${PROJECT_ID}-terraform-state/cloudbuild-artifacts/'
+    paths: ['tfplan']
+timeout: '1800s'
+options:
+  logging: CLOUD_LOGGING_ONLY
