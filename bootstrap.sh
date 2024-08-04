@@ -64,6 +64,7 @@ fi
 roles=(
     "roles/cloudbuild.builds.builder"
     "roles/storage.objectViewer"
+    "roles/storage.admin"
     # Add any other necessary roles here
 )
 
@@ -74,6 +75,7 @@ for role in "${roles[@]}"; do
 done
 
 # Function to create or update a trigger
+
 create_or_update_trigger() {
     local name=$1
     local branch=$2
@@ -81,10 +83,9 @@ create_or_update_trigger() {
     # Check if trigger exists
     if gcloud builds triggers describe "$name" --project=$PROJECT_ID --region=$REGION &>/dev/null; then
         echo "Trigger $name already exists. Updating..."
-        gcloud builds triggers update github \
+        gcloud beta builds triggers update github "$name" \
             --project=$PROJECT_ID \
             --region=$REGION \
-            --name="$name" \
             --repo-name=projectx-infra-core \
             --repo-owner=Gary-Li-LJH \
             --branch-pattern="^$branch$" \
@@ -103,6 +104,7 @@ create_or_update_trigger() {
             --service-account="projects/$PROJECT_ID/serviceAccounts/$SERVICE_ACCOUNT_EMAIL"
     fi
 }
+
 
 # Create or update triggers
 create_or_update_trigger "dev-branch-trigger" "dev"
