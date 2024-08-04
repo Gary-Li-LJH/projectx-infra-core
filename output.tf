@@ -1,6 +1,6 @@
-output "gcs_bucket_name" {
-  value = module.storage.bucket_name
-}
+# output "gcs_bucket_name" {
+#   value = module.storage.bucket_name
+# }
 
 # output "composer_airflow_uri" {
 #   value = module.composer.airflow_uri
