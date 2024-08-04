@@ -17,3 +17,8 @@ variable "dataform_repository_name" {
   description = "The name of the Dataform repository"
   default     = "retail-dataform"
 }
+
+variable "cloudbuild_sa_email" {
+  description = "The email of the Cloud Build service account"
+  default = "cloud-build-service-account@my-ndf-terraform-proj.iam.gserviceaccount.com"
+}
